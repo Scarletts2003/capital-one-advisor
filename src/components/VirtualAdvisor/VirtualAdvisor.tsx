@@ -25,55 +25,58 @@ import {
 import logoCA from '../../image/logo_ca.png';
 
 /**
- * Componente principal de la página del asesor virtual (Agente Inteligente)
- * Incluye:
- * - Sección de plan de ahorro colapsable
- * - Chatbot para interacción con el usuario
- * - Botón de cierre de sesión con confirmación
- * - Encabezado con logo y título
+ * Main component for the Virtual Advisor page (Intelligent Agent)
+ * Includes:
+ * - Savings plan section
+ * - Chatbot for user interaction
+ * - Logout confirmation dialog
+ * - Header with logo and title
  *
- * Documentación en español para mayor claridad y mantenimiento.
+ * Code comments and documentation are written in English for clarity
+ * and easier maintenance by the development team.
  */
 const VirtualAdvisor: React.FC = () => {
   const theme = useTheme();
-  // Estado para mostrar/ocultar el plan de ahorro
+  // State to show/hide the savings plan
   const [isPlanVisible, setIsPlanVisible] = useState(true);
-  // Estado para los mensajes del chat
+  // State for chat messages
   const [messages, setMessages] = useState<Array<{ text: string; isUser: boolean }>>([]);
-  // Estado para el mensaje actual que escribe el usuario
+  // State for current user message
   const [currentMessage, setCurrentMessage] = useState('');
-  // Estado para mostrar el diálogo de confirmación de cierre de sesión
+  // State to show logout confirmation dialog
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
 
-  // Datos de ejemplo para el plan de ahorro
+  // Sample data for savings plan
   const savingsPlan = {
-    type: 'Plan de Ahorro Premium',
-    description: 'Estrategia de ahorro personalizada basada en tu perfil',
+    type: 'Premium Savings Plan',
+    description: 'Personalized savings strategy based on your profile',
     details: [
-      'Meta de ahorro mensual: $500',
-      'Retorno anual esperado: 5%',
-      'Nivel de riesgo: Moderado',
+      'Monthly savings goal: $500',
+      'Expected annual return: 5%',
+      'Risk level: Moderate',
     ],
   };
 
-  // Datos de ejemplo para la gráfica de ingresos y gastos
+  // Sample data for income and expenses chart
   const financialData = [
-    { name: 'Ingresos', value: 3500, color: '#00C49F' },
-    { name: 'Gastos', value: 2800, color: '#FF8042' },
+    { name: 'Income', value: 3500, color: '#00C49F' },
+    { name: 'Expenses', value: 2800, color: '#FF8042' },
   ];
 
   /**
-   * Maneja el envío de un nuevo mensaje en el chat
-   * Aquí normalmente se llamaría a una API para obtener la respuesta del chatbot
+   * Handle sending a new chat message.
+   * In a real implementation this would call a backend or AI API
+   * to obtain the assistant's response. For now we append a
+   * simulated reply after a short timeout.
    */
   const handleSendMessage = () => {
     if (currentMessage.trim()) {
       setMessages([...messages, { text: currentMessage, isUser: true }]);
       setCurrentMessage('');
-      // Simulación de respuesta automática del agente
+      // Simulate automatic agent response
       setTimeout(() => {
         setMessages(prev => [...prev, {
-          text: "Soy tu asesor virtual. ¿En qué puedo ayudarte hoy?",
+          text: "I'm your virtual advisor. How can I help you today?",
           isUser: false
         }]);
       }, 1000);
@@ -81,23 +84,24 @@ const VirtualAdvisor: React.FC = () => {
   };
 
   /**
-   * Abre el diálogo de confirmación para cerrar sesión
+   * Open logout confirmation dialog.
    */
   const handleLogoutClick = () => {
     setIsLogoutDialogOpen(true);
   };
 
   /**
-   * Lógica para cerrar sesión después de confirmar
+   * Logic to perform logout after confirmation.
+   * Replace the console.log with real auth/logout handling.
    */
   const handleLogoutConfirm = () => {
     // Aquí se puede agregar la lógica real de cierre de sesión
-    console.log('Cerrando sesión...');
+    console.log('Logging out...');
     setIsLogoutDialogOpen(false);
   };
 
   /**
-   * Cierra el diálogo de confirmación de cierre de sesión
+   * Close the logout confirmation dialog.
    */
   const handleLogoutCancel = () => {
     setIsLogoutDialogOpen(false);
@@ -168,7 +172,7 @@ const VirtualAdvisor: React.FC = () => {
               width: { xs: '100%', sm: 'auto' },
             }}
           >
-            Agente Inteligente
+            Your Financial Advisor
           </Typography>
           <Box 
             sx={{ 
@@ -201,15 +205,15 @@ const VirtualAdvisor: React.FC = () => {
         aria-labelledby="logout-dialog-title"
       >
         <DialogTitle id="logout-dialog-title">
-          Cerrar Sesión
+          Logout
         </DialogTitle>
         <DialogContent>
-          ¿Estás seguro que deseas cerrar la sesión?
+          Are you sure you want to log out?
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleLogoutCancel}>Cancelar</Button>
+          <Button onClick={handleLogoutCancel}>Cancel</Button>
           <Button onClick={handleLogoutConfirm} color="error" variant="contained">
-            Cerrar Sesión
+            Logout
           </Button>
         </DialogActions>
       </Dialog>
@@ -243,7 +247,7 @@ const VirtualAdvisor: React.FC = () => {
                 color: 'white',
               }}
             >
-              <Typography variant="h6">Tu Plan de Ahorro</Typography>
+              <Typography variant="h6">Your Savings Plan</Typography>
             </Box>
             <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
               <Typography variant="h6" color="primary" sx={{ fontSize: { xs: '1.05rem', sm: '1.125rem' }, fontWeight: 600 }}>
@@ -285,7 +289,7 @@ const VirtualAdvisor: React.FC = () => {
                 color: 'white',
               }}
             >
-              <Typography variant="h6">Balance del Mes Anterior</Typography>
+              <Typography variant="h6">Last Month's Balance</Typography>
             </Box>
             <Box sx={{ 
               p: 2, 
@@ -336,10 +340,10 @@ const VirtualAdvisor: React.FC = () => {
                 lineHeight: 1.6,
               }}
             >
-              Chatea con nuestro asesor virtual para obtener recomendaciones personalizadas sobre ahorro,
-              revisar movimientos del mes anterior o explorar estrategias que se adapten a tu situación. Prueba
-              preguntas como <em>“¿Cómo puedo ahorrar $200 al mes?”</em> o <em>“¿Qué plan de ahorro me conviene?”</em>
-              — el asistente te dará opciones y pasos concretos.
+              Chat with our virtual advisor to get personalized savings recommendations,
+              review last month's transactions, or explore strategies that fit your situation. Try asking
+              questions like <em>"How can I save $200 per month?"</em> or <em>"What savings plan is right for me?"</em>
+              — the assistant will provide you with specific options and steps.
             </Typography>
           </Box>
         </Box>
@@ -397,7 +401,7 @@ const VirtualAdvisor: React.FC = () => {
             <TextField
               fullWidth
               variant="outlined"
-              placeholder="Escribe tu mensaje aquí..."
+              placeholder="Type your message here..."
               value={currentMessage}
               onChange={(e) => setCurrentMessage(e.target.value)}
               onKeyPress={(e) => {
@@ -407,7 +411,7 @@ const VirtualAdvisor: React.FC = () => {
               }}
               size="small"
               sx={{ '& .MuiInputBase-input': { fontSize: { xs: '0.95rem', sm: '1rem' }, lineHeight: 1.6 } }}
-              inputProps={{ 'aria-label': 'mensaje-chat' }}
+              inputProps={{ 'aria-label': 'chat-message' }}
             />
             <Button
               variant="contained"
